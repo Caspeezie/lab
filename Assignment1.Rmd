@@ -1,0 +1,64 @@
+---
+title: "Assignment1"
+author: "Sadeeq"
+date: "9/23/2020"
+output: html_document
+---
+#Question 1:
+Is there a significant difference between the mean perceived satisfaction level of younger adults and older adults?
+
+#Hypothesis:
+Ho: The variance of older adults and younger adults on life perceived satisfaction are equal
+H1: The variance of older adults and younger adults on life perceived satisfaction are not equal.
+
+Alpha: 0.05
+
+#Decision:
+Reject the null hypothesis if the p-value is less than 0.05, accept if otherwise.
+
+#Test:
+
+```{r}
+olderAdults<-c(45, 38, 52, 48, 25, 39, 51, 46, 55, 46)
+youngerAdults<-c(34, 22, 15, 27, 37, 41, 24, 19, 26, 36)
+
+paired_1<-t.test(olderAdults, youngerAdults, paired =FALSE)
+paired_1
+```
+#Conclusion:
+Since p-value (0.0004) is less than alpha (0.05), we reject the null hypothesis.
+
+
+
+#Question 2:
+Is there a significant difference between the mean weight of rats before and after the simulation?
+
+#Hypothesis:
+Ho: There is no significant difference between the mean weight of rats before and after the simulation?
+
+H1:There is a significant difference between the mean weight of rats before and after the simulation?
+
+Alpha: 0.05
+
+#Decision
+Reject Ho if p-value < 0.05, otherwise accept Ho.
+
+#Test
+```{r}
+simulation<-c(12, 7, 3, 11, 8, 5, 14, 7, 9, 10)
+noSimulation<-c(8, 7, 4, 14, 6, 7, 12, 5, 5, 8)
+
+paired_1<-t.test(simulation, noSimulation, paired =TRUE)
+paired_1
+
+```
+
+#Conclusion
+Since p-value(0.2208) is greater than alpha(0.05), so we accept the null hypothesis.
+
+
+```{r}
+df1<-read.table("C:/Users/USER/Desktop/Semicolon/R/R_with_Hamid/data/Assignment.csv", header=T, dec=".", sep=",")
+df1
+
+```

@@ -1,0 +1,48 @@
+---
+title: "Correlation"
+author: "Sadeeq"
+date: "9/24/2020"
+output: html_document
+---
+#Question1:
+
+```{r}
+dt<-read.csv("C:/Users/USER/Desktop/Semicolon/R/R_with_Hamid/data/highway_mpg.csv", header=T, dec=".", sep=",")
+dt
+
+corr<-cor(x=dt$cyl, y=dt$hwy)
+
+library(ggplot2)
+ggplot(dt, aes(x=cyl, y=hwy)) +geom_point() +geom_smooth() +labs(title="Relationship between CYL and HWY")
+
+```
+There exist a negative relationship between variables as x tends to increase, y decreases and vice versa.
+
+#Question2:
+```{r}
+modl<- lm(hwy~cyl, data=dt)
+summary(modl)
+
+```
+The output depicts that the linear equation is: y = 40.0190 - 2.8153(cyl) 
+
+The  p-value of 2.2e-16 indicates that the Cyl has significant effect on Hwy, we can conclude that Regression is useful.
+
+#Question3
+The intercept is also significant at 5% level of significance.
+
+To interprete the slope, for a unit increase in the Hwy, the Cyl decreases by 2.8153.
+
+#Question4
+The R-Squared is interpreted as the amount of variation of the dependent variable that can be explained by the independent variable. For the model, the 57.9% of the total variation in Hwy can be explained by the independent variable "Cyl"
+
+```{r}
+dt$Residuals<- modl$residuals
+plot(modl)
+```
+
+From the Q-Q Plot, Normality of residuals has not been violated as the points on the residual plot lie closely to the line.
+
+Constant variance assumption is met as there is no pattern of points in the residual vs Fitted plot.
+
+Linear relationship between Hwy and Cyl, the assumption is not violated as there is a linear relationship between both variables

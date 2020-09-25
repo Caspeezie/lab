@@ -1,0 +1,145 @@
+---
+title: "Stats"
+author: "Sadeeq"
+date: "9/18/2020"
+output: pdf_document
+---
+
+```{r}
+df<-read.table("C:/Users/USER/Desktop/Semicolon/R/R_with_Hamid/data/AdescoGym.csv", header=T, dec=".", sep=",")
+
+df
+t.test(df$Income, mu=30000, alternative = "greater")
+```
+
+#Research Question
+Is the mean age greater than 20?
+
+#Hypothesis
+Ho = Mean age is not greater than 20
+H1= Mean age is greater than 20
+
+#Level of Significance
+Level of significance: 0.05
+
+#Conclusion
+The p-value < 2.2e-16, so it is less than 0.05, which is the alpha value.
+Therefore, the null hypothesis may be rejected. The alternate hypothesis,
+μA - μB ≠ 0, is true at the 95% confidence interval.
+
+
+
+```{r}
+df<-read.table("C:/Users/USER/Desktop/Semicolon/R/R_with_Hamid/data/AdescoGym.csv", header=T, dec=".", sep=",")
+t.test(df$Age, mu=20, alternative = "greater")
+
+```
+Test of Equality of Variance
+
+Ho: The variance of Male and Female income are equal
+H1: The variance of the Male and Female Income are not equal.
+
+Alpha: 0.05
+
+Decision: Reject Ho if p-value is less than 0.05, accept if otherwise.
+```{r}
+df<-read.table("C:/Users/USER/Desktop/Semicolon/R/R_with_Hamid/data/AdescoGym.csv", header=T, dec=".", sep=",")
+df
+
+library(car)
+leveneTest(df$Income~df$Gender)
+
+
+```
+
+Conclusion: Since the p-value of our leveneTest is less than 0.05, we reject the null hypothesis and conclude the variance of the 2 groups are not equal.
+
+#Research Question:
+Is there a significant difference between the mean income of male and female?
+
+#Hypothesis
+Ho: There is no significant difference between the mean income of male and female.
+H1: There is a significant difference between the mean income of male and female.
+
+Alpha: 0.05
+
+#Decision
+Reject the null hypothesis if the p-value is less than 0.05, accept if otherwise.
+
+#Test
+```{r}
+t.test(df$Income~df$Gender, alternative="two.sided", var.equal=F)
+
+```
+#Conclusion: 
+We reject the null hypothesis because the p-value is less than 0.05.
+
+
+
+#Question
+Is there a significant difference between the mean weight of participants before and after the treatment?
+
+#Hypothesis
+Ho: There is no significant difference between the mean weight of participants before and after the treatment?
+
+H1:There is a significant difference between the mean weight of participants before and after the treatment?
+
+Alpha: 0.05
+
+#Decision
+Reject Ho if p-value < 0.05, otherwise accept Ho.
+
+#Test
+```{r}
+ pre<-c(239, 170, 182, 143, 141, 170, 160, 154, 185, 130)
+ post<-c(362, 343, 330, 340, 314, 567, 292, 439, 312, 292)
+  paired_1<-t.test(pre, post, paired=TRUE)
+  paired_1
+
+```
+#Conclusion
+The p-value is 6.09e-05, so it is less than 0.05, which is the alpha value.
+Therefore, the null hypothesis may be rejected.
+
+
+```{r}
+ad<-read.table("C:/Users/USER/Desktop/Semicolon/R/R_with_Hamid/data/AdescoGym.csv", header=T, dec=".", sep=",")
+
+ad
+library(ggplot2)
+ggplot(ad, aes(x=Age, y=Income))+ geom_point() +labs(title="Relationship between Income and Age")
+```
+
+```{r}
+attach(ad)
+```
+
+```{r}
+modl<-lm(Income~Age)
+summary(modl)
+
+```
+
+```{r}
+nd<-data.frame(Age=c(27,28))
+predict.lm(modl, newdata = nd)
+
+head(ad)
+
+modl<-lm(Income~Age, data=ad)
+summary(modl)
+
+```
+```{r}
+nd<-data.frame(Age=c(27, 28))
+predict.lm(modl, newdata=nd)
+
+ad$Residuals <- modl$residuals
+head(ad)
+
+ggplot(ad, aes(x=Residuals))+geom_histogram()
+```
+```{r}
+
+shapiro.test(ad$Residuals)
+```
